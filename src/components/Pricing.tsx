@@ -78,8 +78,13 @@ const packages = [
 const SimplePackageFlow: React.FC<{ packageName: string; packagePrice: string; onClose: () => void }> = ({ packageName, packagePrice, onClose }) => {
   const [step, setStep] = useState<'industry' | 'details'>('industry');
   const [industry, setIndustry] = useState('');
+  const [otherIndustry, setOtherIndustry] = useState('');
   const [details, setDetails] = useState({ name: '', email: '', phone: '', company: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const canContinueIndustry = industry && (industry !== 'Other' || otherIndustry.trim());
+  const canSubmitDetails = details.name && details.email && details.phone && details.company && details.message;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg)]/95 backdrop-blur-2xl px-4 py-8">
@@ -103,15 +108,23 @@ const SimplePackageFlow: React.FC<{ packageName: string; packagePrice: string; o
               <div className="rounded-[1.5rem] border border-[var(--border-color)] bg-[var(--surface)]/70 p-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--gradient-start)]">Choose your industry</p>
                 <div className="grid md:grid-cols-2 gap-4 mt-5">
-                  {['Restaurants', 'Clinics', 'Salons', 'Gyms', 'Bakery', 'Boutiques', 'Coaching', 'Local Services'].map((option) => (
+                  {['Restaurants', 'Clinics', 'Salons', 'Gyms', 'Bakery', 'Boutiques', 'Local Services', 'Other'].map((option) => (
                     <button key={option} onClick={() => setIndustry(option)} className={`rounded-2xl border p-4 text-left transition-all duration-300 ${industry === option ? 'border-[var(--gradient-start)] bg-[var(--surface)]' : 'border-[var(--border-color)] bg-transparent'}`}>
                       <p className="font-body text-sm text-[var(--text)]">{option}</p>
                     </button>
                   ))}
                 </div>
+                {industry === 'Other' && (
+                  <input value={otherIndustry} onChange={(e) => setOtherIndustry(e.target.value)} placeholder="Type your business type" className="mt-4 w-full rounded-2xl border border-[var(--border-color)] bg-[var(--bg)] px-4 py-3 text-sm outline-none focus:border-[var(--gradient-start)]" />
+                )}
               </div>
+              {error && <p className="text-sm text-[var(--gradient-start)]">{error}</p>}
               <div className="flex justify-end">
-                <button onClick={() => setStep('details')} className="rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)]">Continue</button>
+                <button onClick={() => {
+                  if (!canContinueIndustry) { setError('Please complete the required details.'); return; }
+                  setError('');
+                  setStep('details');
+                }} className="rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)] disabled:opacity-40" disabled={!canContinueIndustry}>Continue</button>
               </div>
             </motion.div>
           )}
@@ -126,7 +139,12 @@ const SimplePackageFlow: React.FC<{ packageName: string; packagePrice: string; o
               </div>
               <div className="space-y-4">
                 <textarea value={details.message} onChange={(e) => setDetails({ ...details, message: e.target.value })} placeholder="Tell us a bit about your project and goals" rows={8} className="w-full rounded-2xl border border-[var(--border-color)] bg-[var(--bg)] px-4 py-3 text-sm outline-none focus:border-[var(--gradient-start)]" />
-                <button onClick={() => setSubmitted(true)} className="w-full rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)]">Request this package</button>
+                {error && <p className="text-sm text-[var(--gradient-start)]">{error}</p>}
+                <button onClick={() => {
+                  if (!canSubmitDetails) { setError('Please complete the required details.'); return; }
+                  setError('');
+                  setSubmitted(true);
+                }} disabled={!canSubmitDetails} className="w-full rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)] disabled:opacity-40">Request this package</button>
               </div>
             </motion.div>
           )}
@@ -151,6 +169,8 @@ const PersonaliseFlow: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [details, setDetails] = useState({ name: '', email: '', phone: '', company: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [industry, setIndustry] = useState('');
+  const [otherIndustry, setOtherIndustry] = useState('');
+  const [error, setError] = useState('');
 
   const toggleSelection = (item: string) => {
     setSelected((prev) => (prev.includes(item) ? prev.filter((x) => x !== item) : [...prev, item]));
@@ -235,12 +255,11 @@ const PersonaliseFlow: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   )}
                 </div>
               </div>
-              <div className="rounded-[1.5rem] border border-[var(--border-color)] bg-[var(--surface)]/70 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="rounded-[1.5rem] border border-[var(--border-color)] bg-[var(--surface)]/70 p-6">
                 <div>
                   <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--gradient-start)]">Estimated investment</p>
                   <p className="font-display text-3xl mt-2 gradient-text">₹25,000 onwards</p>
                 </div>
-                <button onClick={() => setStep('industry')} className="rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)]">Continue to industry</button>
               </div>
             </motion.div>
           )}
@@ -250,15 +269,23 @@ const PersonaliseFlow: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               <div className="rounded-[1.5rem] border border-[var(--border-color)] bg-[var(--surface)]/70 p-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--gradient-start)]">Choose your industry</p>
                 <div className="grid md:grid-cols-2 gap-4 mt-5">
-                  {['Restaurants', 'Clinics', 'Salons', 'Gyms', 'Bakery', 'Boutiques', 'Coaching', 'Local Services'].map((option) => (
+                  {['Restaurants', 'Clinics', 'Salons', 'Gyms', 'Bakery', 'Boutiques', 'Local Services', 'Other'].map((option) => (
                     <button key={option} onClick={() => setIndustry(option)} className={`rounded-2xl border p-4 text-left ${industry === option ? 'border-[var(--gradient-start)] bg-[var(--surface)]' : 'border-[var(--border-color)] bg-transparent'}`}>
                       <p className="font-body text-sm text-[var(--text)]">{option}</p>
                     </button>
                   ))}
                 </div>
+                {industry === 'Other' && (
+                  <input value={otherIndustry} onChange={(e) => setOtherIndustry(e.target.value)} placeholder="Type your business type" className="mt-4 w-full rounded-2xl border border-[var(--border-color)] bg-[var(--bg)] px-4 py-3 text-sm outline-none focus:border-[var(--gradient-start)]" />
+                )}
               </div>
+              {error && <p className="text-sm text-[var(--gradient-start)]">{error}</p>}
               <div className="flex justify-end">
-                <button onClick={() => setStep('details')} className="rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)]">Continue to details</button>
+                <button onClick={() => {
+                  if (!industry || (industry === 'Other' && !otherIndustry.trim())) { setError('Please complete the required details.'); return; }
+                  setError('');
+                  setStep('details');
+                }} disabled={!industry || (industry === 'Other' && !otherIndustry.trim())} className="rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)] disabled:opacity-40">Continue to details</button>
               </div>
             </motion.div>
           )}
@@ -273,7 +300,12 @@ const PersonaliseFlow: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               </div>
               <div className="space-y-4">
                 <textarea value={details.message} onChange={(e) => setDetails({ ...details, message: e.target.value })} placeholder="Tell us a bit about your project and goals" rows={8} className="w-full rounded-2xl border border-[var(--border-color)] bg-[var(--bg)] px-4 py-3 text-sm outline-none focus:border-[var(--gradient-start)]" />
-                <button onClick={() => setSubmitted(true)} className="w-full rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)]">Request this package</button>
+                {error && <p className="text-sm text-[var(--gradient-start)]">{error}</p>}
+                <button onClick={() => {
+                  if (!details.name || !details.email || !details.phone || !details.company || !details.message) { setError('Please complete the required details.'); return; }
+                  setError('');
+                  setSubmitted(true);
+                }} disabled={!details.name || !details.email || !details.phone || !details.company || !details.message} className="w-full rounded-full bg-[var(--text)] px-6 py-3 text-sm font-body text-[var(--bg)] disabled:opacity-40">Request this package</button>
               </div>
             </motion.div>
           )}
@@ -291,7 +323,9 @@ const PersonaliseFlow: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <div className="mt-8 flex flex-wrap gap-3 justify-between items-center border-t border-[var(--border-color)] pt-6">
           <div>
             <p className="text-sm text-[var(--text-muted)] font-body">Selected: {selected.length} add-ons</p>
-            <p className="text-sm font-body text-[var(--text)] mt-1">Estimated investment: <span className="font-semibold gradient-text">₹25,000 onwards</span></p>
+            {step !== 'summary' && (
+              <p className="text-sm font-body text-[var(--text)] mt-1">Estimated investment: <span className="font-semibold gradient-text">₹25,000 onwards</span></p>
+            )}
           </div>
           <div className="flex gap-3">
             {step !== 'base' && step !== 'details' && !submitted && (
@@ -312,9 +346,7 @@ const PersonaliseFlow: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             {step === 'industry' && (
               <button onClick={() => setStep('details')} className="px-5 py-3 rounded-full bg-[var(--text)] text-[var(--bg)] text-sm font-body">Continue to details</button>
             )}
-            {step === 'details' && !submitted && (
-              <button onClick={() => setSubmitted(true)} className="px-5 py-3 rounded-full bg-[var(--text)] text-[var(--bg)] text-sm font-body">Request this package</button>
-            )}
+            {step === 'details' && !submitted && null}
           </div>
         </div>
       </motion.div>

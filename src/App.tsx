@@ -1,19 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './lib/theme';
 import { CustomCursor, ScrollProgress, LoadingScreen } from './components/UI';
-import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Industries } from './components/Industries';
-import { Services } from './components/Services';
-import { Process } from './components/Process';
-import { FeaturedWork } from './components/FeaturedWork';
-import { WhyCreNeev } from './components/WhyCreNeev';
-import { Testimonials } from './components/Testimonials';
-import { Pricing } from './components/Pricing';
-import { FAQ } from './components/FAQ';
-import { FinalCTA, Footer } from './components/Footer';
+import { MainLayout } from './layouts/MainLayout';
+import { Home } from './pages/Home';
+import { ServicesPage } from './pages/Services';
+import { IndustriesPage } from './pages/Industries';
+import { PortfolioPage } from './pages/Portfolio';
+import { ProcessPage } from './pages/Process';
+import { PricingPage } from './pages/Pricing';
+import { AboutPage } from './pages/About';
+import { ContactPage } from './pages/Contact';
+import { DemoPage } from './pages/Demo';
 
 const AppContent: React.FC = () => {
   const lenisRef = useRef<Lenis | null>(null);
@@ -47,21 +46,21 @@ const AppContent: React.FC = () => {
       <CustomCursor />
       <ScrollProgress />
       <div className="grain-overlay" />
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <Industries />
-        <Services />
-        <Process />
-        <FeaturedWork />
-        <WhyCreNeev />
-        <Testimonials />
-        <Pricing />
-        <FAQ />
-        <FinalCTA />
-      </main>
-      <Footer />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="services" element={<ServicesPage />} />
+            <Route path="industries" element={<IndustriesPage />} />
+            <Route path="portfolio" element={<PortfolioPage />} />
+            <Route path="process" element={<ProcessPage />} />
+            <Route path="pricing" element={<PricingPage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="demo/:slug" element={<DemoPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </LoadingScreen>
   );
 };

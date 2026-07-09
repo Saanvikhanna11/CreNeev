@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { SectionReveal, Eyebrow, GradientButton } from './UI';
+import { SectionReveal, Eyebrow } from './UI';
 import { useReducedMotion } from '../lib/theme';
 import { GrowingTree } from './GrowingTree';
 
@@ -46,7 +46,7 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-6 md:mb-8 relative z-10"
         >
-          <Eyebrow>00 — Est. 2024 — Studio</Eyebrow>
+          <Eyebrow>00 — Premium Website Design for Growing Businesses</Eyebrow>
         </motion.div>
 
         {/* Headline with parallax */}
@@ -85,11 +85,6 @@ export const Hero: React.FC = () => {
           </p>
         </SectionReveal>
 
-        {/* Buttons */}
-        <SectionReveal delay={1.2} className="mt-8 flex flex-wrap items-center justify-center gap-4 relative z-10">
-          <GradientButton variant="filled" href="#portfolio">See Our Work</GradientButton>
-          <GradientButton variant="outline" href="#contact">Book a Free Call</GradientButton>
-        </SectionReveal>
       </div>
 
       <div className="border-t border-[var(--border-color)]" />

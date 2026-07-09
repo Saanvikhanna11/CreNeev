@@ -76,11 +76,11 @@ const industries = [
     overlayColor: 'from-violet-950/60',
   },
   {
-    name: 'Coaching',
+    name: 'Your Business',
     col: 'md:col-span-1',
     row: '',
     height: 'h-[200px]',
-    image: 'https://images.pexels.com/photos/9064790/pexels-photo-9064790.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200',
+    image: 'https://images.pexels.com/photos/16323586/pexels-photo-16323586.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200',
     overlayColor: 'from-indigo-950/60',
   },
 ];
@@ -98,8 +98,8 @@ export const Industries: React.FC = () => {
           </h2>
         </SectionReveal>
 
-        {/* Masonry Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 md:grid-rows-[200px_200px_200px]">
+        {/* Equal tile grid */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
           {industries.map((industry, i) => (
             <motion.div
               key={industry.name}
@@ -111,7 +111,7 @@ export const Industries: React.FC = () => {
                 delay: i * 0.06,
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
-              className={`${industry.col} ${industry.row} relative rounded-2xl overflow-hidden cursor-pointer group ${industry.height}`}
+              className="relative rounded-2xl overflow-hidden cursor-pointer group h-[190px] md:h-[220px]"
             >
               {/* Photo */}
               <img
@@ -135,13 +135,6 @@ export const Industries: React.FC = () => {
                 >
                   {industry.name}
                 </motion.span>
-
-                {/* "/ VIEW" — slides up on hover */}
-                <div className="overflow-hidden h-4 mt-1">
-                  <span className="block font-mono text-[10px] md:text-xs text-white/70 tracking-[0.18em] uppercase translate-y-4 group-hover:translate-y-0 transition-transform duration-400 ease-out">
-                    / View
-                  </span>
-                </div>
               </div>
 
               {/* Gradient border glow on hover */}

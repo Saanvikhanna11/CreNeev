@@ -4,40 +4,46 @@ import { useTilt } from '../lib/theme';
 
 const projects = [
   {
-    name: 'Clinic',
-    type: 'Medical & Healthcare',
-    image: '/images/demo-clinic.jpg',
-    color: '#0D9488',
+    name: 'SmileCraft',
+    type: 'Dental & Healthcare',
+    image: 'https://images.pexels.com/photos/5355920/pexels-photo-5355920.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200',
+    color: '#3B82F6',
+    demoUrl: '/demo/smilecraft',
   },
   {
-    name: 'Crochet Studio',
+    name: 'Loop & Loom',
     type: 'Artisanal & Handmade',
-    image: '/images/demo-crochet.jpg',
-    color: '#71717A',
+    image: 'https://images.pexels.com/photos/32655858/pexels-photo-32655858.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200',
+    color: '#EC4899',
+    demoUrl: '/demo/loop-loom',
   },
   {
     name: 'Bakery',
     type: 'Food & Artisan',
     image: '/images/demo-bakery.jpg',
     color: '#D97706',
+    demoUrl: '/demo/bakery',
   },
   {
     name: 'Gym',
     type: 'Fitness & Wellness',
     image: '/images/demo-gym.jpg',
     color: '#2563EB',
+    demoUrl: '/demo/gym',
   },
   {
     name: 'Boutiques',
     type: 'Fashion & Retail',
     image: '/images/demo-boutique.jpg',
     color: '#7C3AED',
+    demoUrl: '/demo/boutiques',
   },
   {
     name: 'Flower Shops',
     type: 'Floral & Events',
     image: '/images/demo-flowers.jpg',
     color: '#059669',
+    demoUrl: '/demo/flower-shops',
   },
 ];
 
@@ -76,30 +82,28 @@ const ProjectCard: React.FC<{
               className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
               loading="lazy"
             />
-            {/* Subtle overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
-            {/* View Project overlay */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <span className="px-5 py-2.5 rounded-full bg-white/90 text-sm font-body font-semibold text-[var(--charcoal)] backdrop-blur-sm">
-                View Project
-              </span>
-            </div>
+            {/* Subtle dark polish only, no floating white label */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
         </div>
 
         {/* Project Info */}
-        <div className="mt-5 flex items-center justify-between px-1">
+        <div className="mt-5 flex items-center justify-between gap-4 px-1">
           <div>
             <h3 className="font-display text-lg md:text-xl font-medium group-hover:text-[var(--gradient-start)] transition-colors duration-300">
               {project.name}
             </h3>
             <span className="text-sm text-[var(--text-muted)] font-body">{project.type}</span>
           </div>
-          <div
-            className="w-3 h-3 rounded-full shrink-0"
-            style={{ backgroundColor: project.color }}
-          />
+          <a
+            href={project.demoUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-xs font-body font-semibold text-[var(--text)] transition-all duration-300 hover:border-[var(--gradient-start)] hover:bg-[var(--surface)]"
+          >
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: project.color }} />
+            View Demo
+          </a>
         </div>
       </div>
     </SectionReveal>

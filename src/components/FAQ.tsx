@@ -82,7 +82,7 @@ export const FAQ: React.FC = () => {
           <Eyebrow className="block mb-4">08 — FAQ</Eyebrow>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05]">
             Questions,{' '}
-            <span className="italic gradient-text">answered plainly.</span>
+            <span className="italic gradient-text">answered clearly.</span>
           </h2>
         </SectionReveal>
 
