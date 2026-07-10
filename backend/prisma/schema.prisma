@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Lead {
+  id               String      @id @default(cuid())
+  name             String
+  email            String
+  phone            String
+  businessName     String
+  industry         String
+  package          PackageType
+  timeline         String?
+  projectDetails   String
+  selectedServices String[]
+  estimatedBudget  String?
+  status           LeadStatus  @default(NEW)
+  source           String      @default("website")
+  notes            String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum PackageType {
+  START
+  ELEVATE
+  PERSONALISE
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  DISCOVERY_CALL
+  PROPOSAL_SENT
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
