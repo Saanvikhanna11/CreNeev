@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", "Segoe UI", sans-serif;
+  --font-display: "DM Serif Display", Georgia, serif;
+  --color-ink: #07090f;
+  --color-panel: #0d1119;
+  --color-panel-raised: #111622;
+  --color-line: #202635;
+  --color-brand: #1666d9;
+  --color-brand-violet: #4032a8;
+  --color-copy: #f0f1f5;
+  --color-subtle: #858b99;
+}
+
+@layer base {
+  * { border-color: var(--color-line); }
+  html { color-scheme: dark; }
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    
+    background: var(--color-ink);
+    color: var(--color-copy);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  button, input, select, textarea { font: inherit; }
+  button, [role="button"] { -webkit-tap-highlight-color: transparent; }
+  ::selection { background: rgb(22 102 217 / 35%); color: white; }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .brand-gradient {
+    background: linear-gradient(110deg, #1570df 0%, #4032a8 100%);
+  }
+  .brand-text {
+    background: linear-gradient(110deg, #1a74e4 8%, #5141c1 90%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  .glass-panel {
+    background: rgb(13 17 25 / 78%);
+    border: 1px solid rgb(255 255 255 / 7%);
+    box-shadow: 0 24px 70px rgb(0 0 0 / 26%);
+    backdrop-filter: blur(22px);
+  }
+  .architectural-grid {
+    background-image:
+      linear-gradient(rgb(44 59 88 / 8%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(44 59 88 / 8%) 1px, transparent 1px);
+    background-size: 76px 76px;
+    mask-image: linear-gradient(to bottom, black, transparent 80%);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(255 255 255 / 11%); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(255 255 255 / 18%); }
