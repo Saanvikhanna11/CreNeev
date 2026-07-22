@@ -31,20 +31,81 @@ export function Login() {
   return (
     <main className="relative flex h-screen min-h-[620px] items-center justify-center overflow-hidden bg-abyss px-4 py-8">
       <div className="architectural-grid pointer-events-none absolute inset-0 opacity-70" />
-      <div className="pointer-events-none absolute left-1/2 top-[44%] h-[620px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-700/[0.12] blur-[130px]" />
-      <svg className="pointer-events-none absolute left-1/2 top-0 h-full min-w-[900px] -translate-x-1/2 opacity-30" viewBox="0 0 1200 800" fill="none" aria-hidden="true"><path d="M150-80C180 240 330 620 600 850M1050-80C1020 240 870 620 600 850M470-100C520 200 580 480 600 850M730-100C680 200 620 480 600 850" stroke="url(#line)" strokeWidth="1"/><defs><linearGradient id="line" x1="600" y1="0" x2="600" y2="800"><stop stopColor="#246bd6"/><stop offset="1" stopColor="#4032a8" stopOpacity="0"/></linearGradient></defs></svg>
+      <div className="pointer-events-none absolute left-1/2 top-[44%] h-[620px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/[0.14] blur-[130px]" />
+      <div className="pointer-events-none absolute left-[18%] top-[18%] h-56 w-56 rounded-full bg-blue-600/[0.12] blur-[90px]" />
+      <svg className="pointer-events-none absolute left-1/2 top-0 h-full min-w-[900px] -translate-x-1/2 opacity-30" viewBox="0 0 1200 800" fill="none" aria-hidden="true">
+        <path d="M150-80C180 240 330 620 600 850M1050-80C1020 240 870 620 600 850M470-100C520 200 580 480 600 850M730-100C680 200 620 480 600 850" stroke="url(#line)" strokeWidth="1" />
+        <defs>
+          <linearGradient id="line" x1="600" y1="0" x2="600" y2="800">
+            <stop stopColor="#6c63ff" />
+            <stop offset="1" stopColor="#332382" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
 
-      <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: 'easeOut' }} className="glass-panel relative z-10 w-full max-w-[440px] rounded-[28px] p-6 sm:p-9">
-        <div className="mb-9 flex justify-center"><Logo /></div>
-        <div className="mb-7 text-center"><p className="text-[9px] font-medium uppercase tracking-[0.28em] text-blue-400">Secure admin access</p><h1 className="mt-3 font-display text-3xl">Welcome back.</h1></div>
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="glass-panel admin-login-card relative z-10 p-6 sm:p-9"
+      >
+        <div className="mb-9 flex justify-center">
+          <Logo />
+        </div>
 
-        {(error || sessionExpired) && <div className="mb-5 flex gap-3 rounded-xl border border-red-400/15 bg-red-500/[0.07] px-3.5 py-3 text-xs leading-5 text-red-200"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" /><span>{error || 'Your session has expired. Please sign in again.'}</span></div>}
+        <div className="mb-8 text-center">
+          <h1 className="font-display text-3xl tracking-[-0.02em] text-ghost sm:text-[38px]">
+            Welcome <span className="brand-text italic">back.</span>
+          </h1>
+          <p className="mt-3 text-sm leading-6 text-muted-dark">
+            Sign in to manage CreNeev enquiries.
+          </p>
+        </div>
+
+        {(error || sessionExpired) && (
+          <div className="mb-5 flex gap-3 rounded-2xl border border-red-400/15 bg-red-500/[0.07] px-3.5 py-3 text-xs leading-5 text-red-200">
+            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+            <span>{error || 'Your session has expired. Please sign in again.'}</span>
+          </div>
+        )}
 
         <form onSubmit={submit} className="space-y-5">
-          <Input label="Email address" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@creneev.com" />
-          <Input label="Password" type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter your password" />
-          <label className="flex w-fit cursor-pointer items-center gap-2.5 text-xs text-muted-dark"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} className="h-4 w-4 rounded border-white/15 bg-black/30 accent-blue-600" />Remember me</label>
-          <Button className="mt-2 w-full" variant="primary" type="submit" loading={loading}>{!loading && <LockKeyhole className="h-4 w-4" />}Sign in</Button>
+          <Input
+            className="admin-login-input"
+            label="Email address"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="admin@creneev.com"
+          />
+          <Input
+            className="admin-login-input"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="Enter your password"
+          />
+          <label className="flex w-fit cursor-pointer items-center gap-2.5 text-xs text-muted-dark">
+            <input
+              type="checkbox"
+              checked={remember}
+              onChange={(event) => setRemember(event.target.checked)}
+              className="h-4 w-4 rounded border-white/15 bg-black/30 accent-violet-500"
+            />
+            Remember me
+          </label>
+          <Button
+            className="admin-gradient-button mt-2 w-full"
+            variant="primary"
+            type="submit"
+            loading={loading}
+          >
+            {!loading && <LockKeyhole className="h-4 w-4" />}
+            Sign in
+          </Button>
         </form>
       </motion.section>
     </main>

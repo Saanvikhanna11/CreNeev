@@ -1,71 +1,137 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
-@import "tailwindcss";
+/* CreNeev admin visual layer — UI only; does not alter public-site base styles */
 
-@theme {
-  --font-sans: "DM Sans", "Segoe UI", sans-serif;
-  --font-display: "DM Serif Display", Georgia, serif;
-  --color-ink: #07090f;
-  --color-panel: #0d1119;
-  --color-panel-raised: #111622;
-  --color-line: #202635;
-  --color-brand: #1666d9;
-  --color-brand-violet: #4032a8;
-  --color-copy: #f0f1f5;
-  --color-subtle: #858b99;
+.brand-gradient {
+  background: linear-gradient(110deg, #0056d3 0%, #332382 100%);
 }
 
-@layer base {
-  * { border-color: var(--color-line); }
-  html { color-scheme: dark; }
-  body {
-    margin: 0;
-    min-width: 320px;
-    min-height: 100vh;
-    
-    background: var(--color-ink);
-    color: var(--color-copy);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  button, input, select, textarea { font: inherit; }
-  button, [role="button"] { -webkit-tap-highlight-color: transparent; }
-  ::selection { background: rgb(22 102 217 / 35%); color: white; }
+.brand-text {
+  background: linear-gradient(110deg, #6c63ff 8%, #a855f7 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
-@layer utilities {
-  .font-display { font-family: var(--font-display); }
-  .brand-gradient {
-    background: linear-gradient(110deg, #1570df 0%, #4032a8 100%);
-  }
-  .brand-text {
-    background: linear-gradient(110deg, #1a74e4 8%, #5141c1 90%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
-  .glass-panel {
-    background: rgb(13 17 25 / 78%);
-    border: 1px solid rgb(255 255 255 / 7%);
-    box-shadow: 0 24px 70px rgb(0 0 0 / 26%);
-    backdrop-filter: blur(22px);
-  }
-  .architectural-grid {
-    background-image:
-      linear-gradient(rgb(44 59 88 / 8%) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(44 59 88 / 8%) 1px, transparent 1px);
-    background-size: 76px 76px;
-    mask-image: linear-gradient(to bottom, black, transparent 80%);
-  }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { scrollbar-width: none; }
+.glass-panel {
+  background: linear-gradient(160deg, rgb(18 18 28 / 82%), rgb(10 10 18 / 72%));
+  border: 1px solid rgb(255 255 255 / 10%);
+  box-shadow:
+    0 28px 80px rgb(0 0 0 / 38%),
+    inset 0 1px 0 rgb(255 255 255 / 6%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+
+.architectural-grid {
+  background-image:
+    linear-gradient(rgb(108 99 255 / 9%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(108 99 255 / 9%) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 440px;
+  border-radius: 24px;
+}
+
+.admin-login-input {
+  height: 3rem !important;
+  border-radius: 999px !important;
+  border-color: rgb(255 255 255 / 10%) !important;
+  background: rgb(7 7 12 / 62%) !important;
+  padding-inline: 1.25rem !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+}
+
+.admin-login-input:hover {
+  border-color: rgb(168 85 247 / 34%) !important;
+}
+
+.admin-login-input:focus {
+  border-color: rgb(168 85 247 / 78%) !important;
+  box-shadow:
+    0 0 0 3px rgb(168 85 247 / 14%),
+    inset 0 1px 0 rgb(255 255 255 / 3%) !important;
+  outline: none !important;
+}
+
+.admin-gradient-button {
+  height: 3rem !important;
+  border-radius: 999px !important;
+  border-color: transparent !important;
+  background: linear-gradient(110deg, #0056d3 0%, #332382 100%) !important;
+  box-shadow: 0 14px 36px rgb(51 35 130 / 34%);
+  transition:
+    transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 300ms ease,
+    filter 300ms ease !important;
+}
+
+.admin-gradient-button:hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 44px rgb(108 99 255 / 36%),
+    0 0 28px rgb(168 85 247 / 18%);
+}
+
+.admin-gradient-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.admin-summary-card {
+  border-radius: 20px;
+  background: linear-gradient(150deg, rgb(18 18 26 / 84%), rgb(10 10 17 / 72%));
+  border: 1px solid rgb(255 255 255 / 10%);
+  box-shadow:
+    0 20px 54px rgb(0 0 0 / 22%),
+    inset 0 1px 0 rgb(255 255 255 / 5%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.admin-summary-card:hover {
+  border-color: rgb(168 85 247 / 34%);
+  box-shadow:
+    0 26px 70px rgb(0 0 0 / 28%),
+    0 0 36px rgb(108 99 255 / 18%),
+    inset 0 1px 0 rgb(255 255 255 / 6%);
+}
+
+.admin-summary-glow {
+  background: rgb(108 99 255 / 10%);
+  transition: background-color 300ms ease;
+}
+
+.admin-summary-card:hover .admin-summary-glow {
+  background: rgb(168 85 247 / 18%);
+}
+
+.admin-panel-glass {
+  background: linear-gradient(160deg, rgb(18 18 26 / 80%), rgb(12 12 20 / 70%));
+  border: 1px solid rgb(255 255 255 / 10%);
+  box-shadow:
+    0 24px 70px rgb(0 0 0 / 22%),
+    inset 0 1px 0 rgb(255 255 255 / 5%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
 }
 
 @keyframes shimmer {
-  100% { transform: translateX(100%); }
+  100% {
+    transform: translateX(100%);
+  }
 }
-
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgb(255 255 255 / 11%); border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgb(255 255 255 / 18%); }
